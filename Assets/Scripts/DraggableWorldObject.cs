@@ -5,17 +5,17 @@ using DG.Tweening;
 
 public class DraggableWorldObject : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler {
 
-	private Vector3 screenPoint;
+//	private Vector3 screenPoint;
 	private Vector2 drag;
-	private Vector3 offset;
+//	private Vector3 offset;
 	private bool readingDrag = false;
 	public float dragMinLength = 5f;
 
 	#region IBeginDragHandler implementation
 	public void OnBeginDrag (PointerEventData eventData)
 	{
-		screenPoint = Camera.main.WorldToScreenPoint(gameObject.transform.position);
-		offset = gameObject.transform.position - Camera.main.ScreenToWorldPoint(new Vector3(eventData.position.x, eventData.position.y, screenPoint.z));
+	//	screenPoint = Camera.main.WorldToScreenPoint(gameObject.transform.position);
+	//	offset = gameObject.transform.position - Camera.main.ScreenToWorldPoint(new Vector3(eventData.position.x, eventData.position.y, screenPoint.z));
 		drag = new Vector2 (0f, 0f);
 		readingDrag = true;
 
@@ -39,7 +39,7 @@ public class DraggableWorldObject : MonoBehaviour, IBeginDragHandler, IDragHandl
 			float yOne = (Mathf.Abs (drag.y) > Mathf.Abs (drag.x)) ? (1f * Mathf.Sign (drag.y)) : 0;
 
 			Vector2 dragOne = new Vector2 (xOne, yOne);
-			Vector3 moveByV = new Vector3 (xOne, 0f, yOne) * 5.5f;
+			Vector3 moveByV = new Vector3 (xOne, 0f, yOne) * 5.4f;
 			Debug.Log ("one " + dragOne);
 
 			readingDrag = false;

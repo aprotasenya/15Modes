@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.Assertions;
 using System;
 using System.Collections;
@@ -228,9 +229,9 @@ public class ProBro {
 #endregion
 
 
-	public static string ListToStr<T> (T[] list ) where T : System.IFormattable
+	public static string ArrayToString<T> (T[] list ) where T : System.IFormattable
 	{
-		string breaker = (list.Length <= 5) ? ", " : "\n";
+		string breaker = ", ";
 		string output = "";
 
 		for (int i = 0; i < list.Length; i++) {
@@ -244,7 +245,90 @@ public class ProBro {
 		return output;
 	}
 
+	public static string ArrayToString<T> (T[,] array ) where T : System.IFormattable
+	{
+		string breaker = ", ";
+		string endLine = "\n";
+		string output = "";
 
+		for (int i = 0; i < array.GetLength(0); i++) {
+			for (int j = 0; j < array.GetLength (1); j++) {
+
+				output += array[i,j].ToString ();
+
+				if (j < array.GetLength (1) - 1) {
+					output += breaker;
+				}
+			
+			}
+
+			if (i < array.GetLength(0) - 1) {
+				output += endLine;
+			}
+
+		}
+
+		return output;
+	}
+
+	public static string ArrayToString ( string[] list ) {
+		string breaker = ", ";
+		string output = "";
+
+		for (int i = 0; i < list.Length; i++) {
+			output += list[i];
+
+			if (i < list.Length - 1) {
+				output += breaker;
+			}
+		}
+
+		return output;
+	}
+
+	public static string ArrayToString ( string[,] array ) {
+		string breaker = ", ";
+		string endLine = "\n";
+		string output = "";
+
+		for (int i = 0; i < array.GetLength(0); i++) {
+			for (int j = 0; j < array.GetLength (1); j++) {
+
+				output += array[i,j];
+
+				if (j < array.GetLength (1) - 1) {
+					output += breaker;
+				}
+
+			}
+
+			if (i < array.GetLength(0) - 1) {
+				output += endLine;
+			}
+
+		}
+
+		return output;
+	}
+
+}
+
+// ##################################################################################
+
+public static class ProBroExtensions {
+
+	// a method to set the "interactable" field TRUE - for use with callbacks
+	public static void SetInteractable (this Button b) {
+		b.interactable = true;
+	}
+	
+	// a method to set the "interactable" field FALSE - for use with callbacks
+	public static void SetNonInteractable (this Button b) {
+		b.interactable = false;
+	}
+
+
+	
 }
 
 [ System.Serializable ]
