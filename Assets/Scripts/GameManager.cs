@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 using System.Collections;
 using System.Collections.Generic;
 
@@ -7,7 +8,9 @@ public class GameManager : MonoBehaviour {
 	string[,] fieldMap;
 	public Vector2 fieldSize;
 	public Transform tileParent;
+	public Transform defUICanvas;
 	public GameObject tilePrefab;
+	public GameObject tileLabelPrefab;
 	public Vector3 tileSize;
 	public Vector3 tileGap;
 
@@ -29,8 +32,32 @@ public class GameManager : MonoBehaviour {
 
 	}
 	
-	void Update () {
+
+
+	public void FillTheMapRnd () {
 	
+		List<int> sizes = new List<int> ();
+		sizes.AddRange (new int[] { 2, 3, 3, 4, 4 } );
+
+		string log = ProBro.ArrayToString<int> (sizes.ToArray ());
+		Debug.Log ("sizes = " + log);
+
+		int rnX = Random.Range (0, sizes.Count);
+		fieldSize.x = sizes [rnX];
+		sizes.RemoveAt (rnX);
+
+		log = ProBro.ArrayToString<int> (sizes.ToArray ());
+		Debug.Log ("sizes = " + log);
+
+		int rnY = Random.Range (0, sizes.Count);
+		fieldSize.y = sizes [rnY];
+		sizes.RemoveAt (rnY);
+
+		log = ProBro.ArrayToString<int> (sizes.ToArray ());
+		Debug.Log ("sizes = " + log);
+
+		FillTheMap ();
+
 	}
 
 	public void FillTheMap () {
@@ -69,7 +96,7 @@ public class GameManager : MonoBehaviour {
 	}
 
 
-	public void DebugMap () {
+	public void LogFieldMap () {
 
 		string log = ProBro.ArrayToString (fieldMap); 
 		Debug.Log (log);
@@ -94,10 +121,17 @@ public class GameManager : MonoBehaviour {
 			for (int iy = 0; iy < fieldMap.GetLength (0); iy++) {
 
 				if (fieldMap[iy, ix] != "0") {
+					
 					GameObject tile = (GameObject)GameObject.Instantiate (tilePrefab);
 					tile.transform.SetParent (tileParent);
 					tile.name = fieldMap [iy, ix];
 					tile.transform.localScale = new Vector3 (tsX, tsY, tsZ);
+
+					GameObject tileLabel = (GameObject)GameObject.Instantiate (tileLabelPrefab);
+					tileLabel.transform.SetParent (defUICanvas);
+					tileLabel.name = tile.name + "_Label";
+					tileLabel.GetComponent<Text> ().text = tile.name;
+					tileLabel.GetComponent<FollowingUI> ().SetTarget (tile);
 
 					float tilePosX = (tsX * (ix + 0.5f)) + (gapX * ix);
 					float tilePosY = 0f;

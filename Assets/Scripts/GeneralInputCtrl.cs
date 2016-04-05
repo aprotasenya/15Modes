@@ -26,14 +26,14 @@ public class GeneralInputCtrl : MonoBehaviour {
 			mngr.FillTheMap ();
 
 		if (Input.GetKeyUp (debugMapKey))
-			mngr.DebugMap ();
+			mngr.LogFieldMap ();
 
 		if (Input.GetKeyUp (buildFieldKey))
 			mngr.BuildTheField ();
 
 	}
 
-	void ReloadScene () {
+	public void ReloadScene () {
 		SceneManager.LoadScene (SceneManager.GetActiveScene ().name);
 
 	}
